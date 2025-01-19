@@ -1,10 +1,10 @@
 package com.carshop.controller;
 
+import com.carshop.dto.VehicleResponse;
 import com.carshop.model.Vehicle;
 import com.carshop.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class VehiclesController {
 
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
-    public Page<Vehicle> index(
+    public VehicleResponse index(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sort) {

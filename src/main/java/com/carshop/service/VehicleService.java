@@ -1,5 +1,6 @@
 package com.carshop.service;
 
+import com.carshop.dto.VehicleResponse;
 import com.carshop.model.Vehicle;
 import com.carshop.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,12 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    public Page<Vehicle> getVehicles(int page, int size, String sort) {
+    public VehicleResponse getVehicles(int page, int size, String sort) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort));
-        return vehicleRepository.findAll(pageRequest);
+        Page<Vehicle> VehiclePage = vehicleRepository.findAll(pageRequest);
+
+        return new VehicleResponse(VehiclePage.getContent(), (int) VehiclePage.getTotalElements(),
+                VehiclePage.getTotalPages());
     }
 
     public Vehicle findById(Long id) {
