@@ -1,6 +1,7 @@
 package com.carshop.service;
 
 import com.carshop.dto.VehicleResponse;
+import com.carshop.exception.ResourceNotFoundException;
 import com.carshop.model.Vehicle;
 import com.carshop.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class VehicleService {
 
     public Vehicle findById(Long id) {
         return vehicleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vehicle with id " + id + " no found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with id " + id + " no found"));
     }
 
     public Vehicle create(Vehicle vehicleData) {
