@@ -3,9 +3,10 @@ package com.carshop.service;
 import com.carshop.model.Vehicle;
 import com.carshop.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class VehicleService {
@@ -13,8 +14,9 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    public List<Vehicle> getAll() {
-        return vehicleRepository.findAll();
+    public Page<Vehicle> getVehicles(int page, int size, String sort) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort));
+        return vehicleRepository.findAll(pageRequest);
     }
 
     public Vehicle findById(Long id) {

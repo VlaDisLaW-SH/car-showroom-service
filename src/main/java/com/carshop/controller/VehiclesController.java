@@ -4,11 +4,10 @@ import com.carshop.model.Vehicle;
 import com.carshop.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/vehicles")
@@ -19,12 +18,11 @@ public class VehiclesController {
 
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Vehicle>> index() {
-        var vehicles = vehicleService.getAll();
-
-        return ResponseEntity.ok()
-                .header("X-Total-Count", String.valueOf(vehicles.size()))
-                .body(vehicles);
+    public Page<Vehicle> index(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sort) {
+        return vehicleService.getVehicles(page, size, sort);
     }
 
     @GetMapping(path = "/{id}")
