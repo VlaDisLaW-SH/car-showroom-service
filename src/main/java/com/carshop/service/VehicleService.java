@@ -17,7 +17,7 @@ public class VehicleService {
     private VehicleRepository vehicleRepository;
 
     public VehicleResponse getVehicles(int page, int size, String sort) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sort));
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by(sort));
         Page<Vehicle> VehiclePage = vehicleRepository.findAll(pageRequest);
 
         return new VehicleResponse(VehiclePage.getContent(), (int) VehiclePage.getTotalElements(),

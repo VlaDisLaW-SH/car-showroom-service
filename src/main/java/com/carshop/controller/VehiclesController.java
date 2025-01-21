@@ -19,7 +19,7 @@ public class VehiclesController {
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
     public VehicleResponse index(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sort) {
         return vehicleService.getVehicles(page, size, sort);
