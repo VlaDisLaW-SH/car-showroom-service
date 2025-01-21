@@ -11,7 +11,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -54,11 +53,4 @@ public class Vehicle {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime
-                .now()
-                .truncatedTo(ChronoUnit.SECONDS);
-    }
 }
