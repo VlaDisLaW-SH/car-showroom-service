@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class VehicleResponse {
-    private List<Vehicle> vehicles;
+    private List<VehicleDTO> vehicles;
     private int totalElements;
     private int totalPages;
 }

@@ -1,5 +1,7 @@
 package com.carshop.controller;
 
+import com.carshop.dto.VehicleCreateDTO;
+import com.carshop.dto.VehicleDTO;
 import com.carshop.dto.VehicleResponse;
 import com.carshop.model.Vehicle;
 import com.carshop.service.VehicleService;
@@ -27,17 +29,15 @@ public class VehiclesController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Vehicle> show(@PathVariable Long id) {
+    public ResponseEntity<VehicleDTO> show(@PathVariable Long id) {
         var vehicles = vehicleService.findById(id);
 
-        return ResponseEntity.ok()
-                .body(vehicles);
-
+        return ResponseEntity.ok(vehicles);
     }
 
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Vehicle> create(@Valid @RequestBody Vehicle vehicleData) {
+    public ResponseEntity<VehicleDTO> create(@Valid @RequestBody VehicleCreateDTO vehicleData) {
         var vehicles = vehicleService.create(vehicleData);
 
         return ResponseEntity

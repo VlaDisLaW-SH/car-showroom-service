@@ -1,7 +1,10 @@
 package com.carshop.service;
 
+import com.carshop.dto.VehicleCreateDTO;
+import com.carshop.dto.VehicleDTO;
 import com.carshop.dto.VehicleResponse;
 import com.carshop.exception.ResourceNotFoundException;
+import com.carshop.mapper.VehicleMapper;
 import com.carshop.model.Vehicle;
 import com.carshop.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,31 +13,44 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VehicleService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private VehicleMapper vehicleMapper;
+
     public VehicleResponse getVehicles(int page, int size, String sort) {
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by(sort));
-        Page<Vehicle> VehiclePage = vehicleRepository.findAll(pageRequest);
+        Page<Vehicle> vehiclePage = vehicleRepository.findAll(pageRequest);
 
-        return new VehicleResponse(VehiclePage.getContent(), (int) VehiclePage.getTotalElements(),
-                VehiclePage.getTotalPages());
+        List<VehicleDTO> convertContentPageToDTO = vehiclePage.stream()
+                .map(vehicle -> vehicleMapper.map(vehicle))
+                .toList();
+
+        return new VehicleResponse(convertContentPageToDTO, (int) vehiclePage.getTotalElements(),
+                vehiclePage.getTotalPages());
     }
 
-    public Vehicle findById(Long id) {
-        return vehicleRepository.findById(id)
+    public VehicleDTO findById(Long id) {
+        var vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle with id " + id + " no found"));
+        return vehicleMapper.map(vehicle);
     }
 
-    public Vehicle create(Vehicle vehicleData) {
-        vehicleRepository.save(vehicleData);
-        return vehicleData;
+    public VehicleDTO create(VehicleCreateDTO vehicleData) {
+        var vehicle = vehicleMapper.map(vehicleData);
+        vehicleRepository.save(vehicle);
+        return vehicleMapper.map(vehicle);
     }
 
     public void delete(Long id) {
-        vehicleRepository.deleteById(id);
+        var vehicle = vehicleRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Vehicle with id " + id + " no found"));
+        vehicleRepository.delete(vehicle);
     }
 }
