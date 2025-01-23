@@ -3,7 +3,7 @@ package com.carshop.controller;
 import com.carshop.dto.VehicleCreateDTO;
 import com.carshop.dto.VehicleDTO;
 import com.carshop.dto.VehicleResponse;
-import com.carshop.model.Vehicle;
+import com.carshop.dto.VehicleUpdateDTO;
 import com.carshop.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +43,14 @@ public class VehiclesController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(vehicles);
+    }
+
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<VehicleDTO> update(@Valid @RequestBody VehicleUpdateDTO vehicleData, @PathVariable Long id) {
+        var vehicle = vehicleService.update(vehicleData, id);
+
+        return ResponseEntity.ok(vehicle);
     }
 
     @DeleteMapping(path = "/{id}")

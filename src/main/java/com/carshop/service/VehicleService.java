@@ -3,6 +3,7 @@ package com.carshop.service;
 import com.carshop.dto.VehicleCreateDTO;
 import com.carshop.dto.VehicleDTO;
 import com.carshop.dto.VehicleResponse;
+import com.carshop.dto.VehicleUpdateDTO;
 import com.carshop.exception.ResourceNotFoundException;
 import com.carshop.mapper.VehicleMapper;
 import com.carshop.model.Vehicle;
@@ -44,6 +45,15 @@ public class VehicleService {
 
     public VehicleDTO create(VehicleCreateDTO vehicleData) {
         var vehicle = vehicleMapper.map(vehicleData);
+        vehicleRepository.save(vehicle);
+        return vehicleMapper.map(vehicle);
+    }
+
+    public VehicleDTO update(VehicleUpdateDTO vehicleDto, Long id) {
+        var vehicle = vehicleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with id " + id + " no found"));
+
+        vehicleMapper.update(vehicleDto, vehicle);
         vehicleRepository.save(vehicle);
         return vehicleMapper.map(vehicle);
     }
