@@ -26,6 +26,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.0")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.0")
     implementation("com.fasterxml.jackson.core:jackson-core:2.14.0")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 }
