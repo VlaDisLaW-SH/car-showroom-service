@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,11 +26,11 @@ public class Vehicle {
     private long id;
 
     @NotBlank
-    @Column(length = 100)
+    @Size(max = 100)
     private String brand;
 
     @NotBlank
-    @Column(length = 100)
+    @Size(max = 100)
     private String model;
 
     @NotNull
@@ -40,10 +41,10 @@ public class Vehicle {
     private Integer price;
 
     @NotBlank
-    @Column(length = 50)
+    @Size(max = 50)
     private String status;
 
-    @Column(length = 50)
+    @Size(max = 30)
     private String bodyType;
 
     private String description;
