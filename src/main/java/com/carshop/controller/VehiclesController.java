@@ -4,11 +4,13 @@ import com.carshop.dto.VehicleCreateDTO;
 import com.carshop.dto.VehicleDTO;
 import com.carshop.dto.VehicleResponse;
 import com.carshop.dto.VehicleUpdateDTO;
+import com.carshop.exception.CustomValidationException;
 import com.carshop.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -37,7 +39,11 @@ public class VehiclesController {
 
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<VehicleDTO> create(@Valid @RequestBody VehicleCreateDTO vehicleData) {
+    public ResponseEntity<VehicleDTO> create(@Valid @RequestBody VehicleCreateDTO vehicleData, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new CustomValidationException(bindingResult);
+        }
+
         var vehicles = vehicleService.create(vehicleData);
 
         return ResponseEntity
