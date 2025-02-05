@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.List;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -19,7 +19,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CustomValidationException.class)
-    public ResponseEntity<List<String>> handleValidationException(CustomValidationException ex) {
+    public ResponseEntity<Map<String, String>> handleValidationException(CustomValidationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErrors());
     }
 }
