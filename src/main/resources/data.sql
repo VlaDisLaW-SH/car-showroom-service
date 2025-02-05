@@ -14,3 +14,10 @@ INSERT INTO vehicles (brand, model, issue_year, price, status, body_type, descri
 ('Honda', 'Civic', '2015', 17000, 'In stock', 'Sedan', 'Надежный и экономичный автомобиль с хорошими отзывами.', NOW()),
 ('Porsche', 'Macan', '2021', 60000, 'In stock', 'SUV', 'Элегантный и мощный кроссовер.', NOW()),
 ('Fiat', '500', '2013', 8000, 'Sold', 'Hatchback', 'Компактный и стильный городской автомобиль.', NOW());
+
+INSERT INTO customers (full_name, phone_number, email, password, created_at) VALUES
+('Иван Иванов', '+7(123)456-78-90', 'ivan.ivanov@example.com', 'password123', NOW()),
+('Мария Петрова', '+7(234)567-89-01', 'maria.petrova@example.com', 'securepass456', NOW()),
+('Сергей Сидоров', '+7(345)678-90-12', 'sergey.sidorov@example.com', 'mypassword789', NOW()),
+('Алексей Смирнов', '+7(456)789-01-23', 'aleksey.smirnov@example.com', 'pass1234', NOW()),
+('Ольга Кузнецова', '+7(567)890-12-34', 'olga.kuznetsova@example.com', 'mypassword567', NOW());
