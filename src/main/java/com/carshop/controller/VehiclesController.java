@@ -2,7 +2,7 @@ package com.carshop.controller;
 
 import com.carshop.dto.VehicleCreateDTO;
 import com.carshop.dto.VehicleDTO;
-import com.carshop.dto.VehicleResponse;
+import com.carshop.dto.VehicleResponseDto;
 import com.carshop.dto.VehicleUpdateDTO;
 import com.carshop.exception.CustomValidationException;
 import com.carshop.service.VehicleService;
@@ -22,11 +22,13 @@ public class VehiclesController {
 
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
-    public VehicleResponse index(
+    public ResponseEntity<VehicleResponseDto> index(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sort) {
-        return vehicleService.getVehicles(page, size, sort);
+
+        VehicleResponseDto vehicleResponseDto = vehicleService.getVehicles(page, size, sort);
+        return ResponseEntity.ok(vehicleResponseDto);
     }
 
     @GetMapping(path = "/{id}")
@@ -53,9 +55,12 @@ public class VehiclesController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<VehicleDTO> update(@Valid @RequestBody VehicleUpdateDTO vehicleData, @PathVariable Long id) {
+    public ResponseEntity<VehicleDTO> update(@Valid @RequestBody VehicleUpdateDTO vehicleData,
+                                             BindingResult bindingResult, @PathVariable Long id) {
+        if (bindingResult.hasErrors()) {
+            throw new CustomValidationException(bindingResult);
+        }
         var vehicle = vehicleService.update(vehicleData, id);
-
         return ResponseEntity.ok(vehicle);
     }
 

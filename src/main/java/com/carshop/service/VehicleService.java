@@ -2,7 +2,7 @@ package com.carshop.service;
 
 import com.carshop.dto.VehicleCreateDTO;
 import com.carshop.dto.VehicleDTO;
-import com.carshop.dto.VehicleResponse;
+import com.carshop.dto.VehicleResponseDto;
 import com.carshop.dto.VehicleUpdateDTO;
 import com.carshop.exception.ResourceNotFoundException;
 import com.carshop.mapper.VehicleMapper;
@@ -25,7 +25,7 @@ public class VehicleService {
     @Autowired
     private VehicleMapper vehicleMapper;
 
-    public VehicleResponse getVehicles(int page, int size, String sort) {
+    public VehicleResponseDto getVehicles(int page, int size, String sort) {
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by(sort));
         Page<Vehicle> vehiclePage = vehicleRepository.findAll(pageRequest);
 
@@ -33,7 +33,7 @@ public class VehicleService {
                 .map(vehicle -> vehicleMapper.map(vehicle))
                 .toList();
 
-        return new VehicleResponse(convertContentPageToDTO, (int) vehiclePage.getTotalElements(),
+        return new VehicleResponseDto(convertContentPageToDTO, (int) vehiclePage.getTotalElements(),
                 vehiclePage.getTotalPages());
     }
 
