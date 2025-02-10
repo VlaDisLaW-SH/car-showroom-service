@@ -2,6 +2,7 @@ package com.carshop.handler;
 
 import com.carshop.exception.CustomValidationException;
 import com.carshop.exception.ResourceNotFoundException;
+import com.carshop.exception.VehicleNotAvailableForOrderException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,5 +22,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomValidationException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(CustomValidationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErrors());
+    }
+
+    @ExceptionHandler(VehicleNotAvailableForOrderException.class)
+    public ResponseEntity<String> handleVehicleNotAvailableForOrderException(VehicleNotAvailableForOrderException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
