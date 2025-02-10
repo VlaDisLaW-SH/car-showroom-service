@@ -49,6 +49,10 @@ public class Vehicle {
 
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     @CreatedDate
     private LocalDateTime createdAt;
 

@@ -18,6 +18,7 @@ public class VehicleDTO {
     private String status;
     private String bodyType;
     private String description;
+    private Long orderId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;

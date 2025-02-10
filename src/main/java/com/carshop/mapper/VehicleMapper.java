@@ -1,11 +1,8 @@
 package com.carshop.mapper;
 
+import com.carshop.dto.VehicleForOrderDTO;
 import com.carshop.dto.VehicleUpdateDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 import com.carshop.dto.VehicleCreateDTO;
 import com.carshop.dto.VehicleDTO;
@@ -19,6 +16,8 @@ import com.carshop.model.Vehicle;
 )
 public abstract class VehicleMapper {
     public abstract Vehicle map(VehicleCreateDTO dto);
+    @Mapping(target = "orderId", source = "order.id")
     public abstract VehicleDTO map(Vehicle model);
     public abstract void update(VehicleUpdateDTO dto, @MappingTarget Vehicle model);
+    public abstract VehicleForOrderDTO mapToList(Vehicle model);
 }
